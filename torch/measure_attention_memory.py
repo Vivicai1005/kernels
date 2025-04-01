@@ -67,10 +67,10 @@ def main():
 
 
     # Measure peak memory with memory-efficient SDP enabled
-    mem_efficient_peak= measure_attention_memory_with_backward(q, k, v, use_mem_efficient=True)
+    # mem_efficient_peak= measure_attention_memory_with_backward(q, k, v, use_mem_efficient=True)
 
     # Measure peak memory with memory-efficient SDP disabled
-    non_mem_efficient_peak = measure_attention_memory_with_backward(q, k, v, use_mem_efficient=False)
+    # non_mem_efficient_peak = measure_attention_memory_with_backward(q, k, v, use_mem_efficient=False)
 
     # Measure peak memory default
     default_mem_efficient_peak = measure_attention_memory_with_backward_default(q, k, v)
