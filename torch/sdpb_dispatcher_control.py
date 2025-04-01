@@ -1,5 +1,7 @@
 # Lets define a helpful benchmarking function:
 import torch.utils.benchmark as benchmark
+import torch
+
 def benchmark_torch_function_in_microseconds(f, *args, **kwargs):
     t0 = benchmark.Timer(
         stmt="f(*args, **kwargs)", globals={"args": args, "kwargs": kwargs, "f": f}
