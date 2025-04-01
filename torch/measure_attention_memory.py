@@ -66,7 +66,7 @@ def main():
     v = torch.randn(batch_size, seq_length, embed_dim, device=device)
 
     # Measure peak memory default
-    default_mem_efficient_peak = measure_attention_memory_with_backward(q, k, v)
+    default_mem_efficient_peak = measure_attention_memory_with_backward_default(q, k, v)
 
     # Measure peak memory with memory-efficient SDP enabled
     mem_efficient_peak= measure_attention_memory_with_backward(q, k, v, use_mem_efficient=True)
