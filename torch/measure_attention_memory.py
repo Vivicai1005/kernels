@@ -77,12 +77,12 @@ def main():
 
     # Convert memory from bytes to megabytes.
     default_mem_efficient_peak_mb = default_mem_efficient_peak / (1024 ** 2)
-    mem_efficient_peak_mb = mem_efficient_peak / (1024 ** 2)
-    non_mem_efficient_peak_mb = non_mem_efficient_peak / (1024 ** 2)
+    # mem_efficient_peak_mb = mem_efficient_peak / (1024 ** 2)
+    # non_mem_efficient_peak_mb = non_mem_efficient_peak / (1024 ** 2)
 
     print(f"Peak memory with mem efficient defaukt: {default_mem_efficient_peak_mb:.2f} MB")
-    print(f"Peak memory with mem efficient SDP enabled: {mem_efficient_peak_mb:.2f} MB")
-    print(f"Peak memory with mem efficient SDP disabled: {non_mem_efficient_peak_mb:.2F} MB")
+    # print(f"Peak memory with mem efficient SDP enabled: {mem_efficient_peak_mb:.2f} MB")
+    # print(f"Peak memory with mem efficient SDP disabled: {non_mem_efficient_peak_mb:.2F} MB")
 
 if __name__ == "__main__":
     if torch.cuda.is_available():
