@@ -6,7 +6,7 @@ def measure_attention_memory(q, k, v, use_mem_efficient):
     torch.cuda.empty_cache()
     torch.cuda.reset_peak_memory_stats()
     # Globaly enable or disable memory-efficient scaled dot product attention
-    torch.backends.cuda.enable_mem_efficient(use_mem_efficient)
+    torch.backends.cuda.enable_mem_efficient_sdp(use_mem_efficient)
 
     # Run the scaled dot product attention operation.
     _ = F.scaled_dot_product_attention(q, k, v)
