@@ -1,6 +1,10 @@
+import torch
+import torch.nn as nn
+import torch.nn.functional as F
+device = "cuda" if torch.cuda.is_available() else "cpu"
+
 # Lets define a helpful benchmarking function:
 import torch.utils.benchmark as benchmark
-import torch
 
 def benchmark_torch_function_in_microseconds(f, *args, **kwargs):
     t0 = benchmark.Timer(
