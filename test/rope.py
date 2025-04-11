@@ -91,13 +91,30 @@ class RoPE3D(RoPE1D):
         return tokens
 
 
-device = torch.device("cuda")
-tokens = torch.randn(1, 37944, 24, 128, device=device)
-rope_positions = [36, 34, 62]
-rope_ch_split = [64, 32, 32]
 
-rope_3d = RoPE3D(freq=1e4, F0=1.0, scaling_factor=1.0)
-rope_ch_split = [64, 32, 32]
+import torch.distributed as dist
+from stepvideo.config import parse_args
+from stepvideo.parallel import initialize_parall_group, get_parallel_group
+from stepvideo.utils import setup_seed
 
-rope_3d(tokens, rope_positions, rope_ch_split, parallel=True)
+if __name__ == "__main__":
+    args = parse_args()
+    initialize_parall_group(ring_degree=args.ring_degree, ulysses_degree=args.ulysses_degree,
+                            tensor_parallel_degree=args.tensor_parallel_degree)
 
+    local_rank = get_parallel_group().local_rank
+    device = torch.device(f"cuda:{local_rank}")
+
+    setup_seed(args.seed)
+
+    device = torch.device("cuda")
+    tokens = torch.randn(1, 37944, 24, 128, device=device)
+    rope_positions = [36, 34, 62]
+    rope_ch_split = [64, 32, 32]
+
+    rope_3d = RoPE3D(freq=1e4, F0=1.0, scaling_factor=1.0)
+    rope_ch_split = [64, 32, 32]
+
+    rope_3d(tokens, rope_positions, rope_ch_split, parallel=True)
+
+    dist.destroy_process_group()
