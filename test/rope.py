@@ -114,6 +114,8 @@ if __name__ == "__main__":
 
     rope_3d = RoPE3D(freq=1e4, F0=1.0, scaling_factor=1.0)
 
+    rope_3d(tokens, rope_positions, rope_ch_split, parallel=True)
+
     with torch.profiler.profile(
         activities=[torch.profiler.ProfilerActivity.CPU, torch.profiler.ProfilerActivity.CUDA],
         record_shapes=True,
