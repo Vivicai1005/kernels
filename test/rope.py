@@ -113,6 +113,18 @@ if __name__ == "__main__":
     rope_ch_split = [64, 32, 32]
 
     rope_3d = RoPE3D(freq=1e4, F0=1.0, scaling_factor=1.0)
-    rope_3d(tokens, rope_positions, rope_ch_split, parallel=True)
+
+    with torch.profiler.profile(
+        activities=[torch.profiler.ProfilerActivity.CPU, torch.profiler.ProfilerActivity.CUDA],
+        record_shapes=True,
+        profile_memory=True,
+        with_stack=True
+    ) as prof:
+        rope_3d(tokens, rope_positions, rope_ch_split, parallel=True)
+
+    # Print the profiling summary, sorting by CUDA time.
+    print(prof.key_averages().table(sort_by="self_cuda_time_total", row_limit=10))
+    # Optionally, export the profile trace for deeper analysis using Chrome Trace Viewer.
+    prof.export_chrome_trace("rope3d_profile_trace.json")
 
     dist.destroy_process_group()
