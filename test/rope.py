@@ -108,13 +108,11 @@ if __name__ == "__main__":
     setup_seed(args.seed)
 
     device = torch.device("cuda")
-    tokens = torch.randn(1, 37944, 24, 128, device=device)
+    tokens = torch.randn(1, 75888, 48, 128, device=device)
     rope_positions = [36, 34, 62]
     rope_ch_split = [64, 32, 32]
 
     rope_3d = RoPE3D(freq=1e4, F0=1.0, scaling_factor=1.0)
-    rope_ch_split = [64, 32, 32]
-
     rope_3d(tokens, rope_positions, rope_ch_split, parallel=True)
 
     dist.destroy_process_group()
